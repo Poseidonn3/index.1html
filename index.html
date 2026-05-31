@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover">
-    <title>Vardiya Yönetim Merkezi 2026</title>
+    <title>Vardiya Asistanım 2026</title>
     
     <!-- PWA & Mobil Uyumluluk -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -67,11 +67,11 @@
         ::placeholder { color: #94a3b8; opacity: 1; }
         .dark ::placeholder { color: #64748b; }
         
-        input[type="date"], input[type="number"], input[type="text"], select { 
+        input[type="date"], input[type="time"], input[type="number"], input[type="text"], select { 
             -webkit-appearance: none; width: 100%; box-sizing: border-box; background: transparent; outline: none;
         }
         
-        input[type="date"]::-webkit-calendar-picker-indicator { 
+        input[type="date"]::-webkit-calendar-picker-indicator, input[type="time"]::-webkit-calendar-picker-indicator { 
             filter: invert(1); opacity: 0.7; cursor: pointer; width: 100%; height: 100%; position: absolute; left: 0; top: 0; background-position: right; background-size: 20px; 
         }
         
@@ -110,7 +110,6 @@
         }
         @keyframes progress-stripes { from { background-position: 1rem 0; } to { background-position: 0 0; } }
 
-        /* SPLASH EKRANI ANİMASYONLARI */
         .splash-logo { animation: splashPop 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .splash-text { opacity: 0; animation: splashTextFade 0.8s ease-out 0.3s forwards; }
         @keyframes splashPop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
@@ -135,7 +134,7 @@
                 <div class="flex-1 overflow-hidden pr-3">
                     <h1 class="text-2xl sm:text-3xl font-black tracking-tight text-blue-600 dark:text-blue-400 truncate">Vardiya Akışı</h1>
                     <div class="flex items-center gap-2 mt-1">
-                        <!-- YAZI KISALTILDI, SHRINK-0 EKLENDİ SAAT ARTIK HEP GÖRÜNÜR -->
+                        <!-- YAZI GÜNCELLENDİ -->
                         <p class="text-[11px] sm:text-xs font-black text-slate-400 uppercase tracking-widest truncate">Vardiya Asistanım</p>
                         <span class="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600 shrink-0"></span>
                         <p id="live-clock" class="text-[11px] sm:text-xs font-black text-emerald-500 uppercase tracking-widest shrink-0">00:00</p>
@@ -155,7 +154,6 @@
                 </div>
             </header>
 
-            <!-- CANLI DURUM -->
             <div class="glass-card p-5 w-full flex flex-col gap-4">
                 <div class="flex gap-2 w-full">
                     <div class="flex-1 bg-slate-50 dark:bg-darkinput rounded-[16px] p-3 flex flex-col justify-center items-center overflow-hidden">
@@ -179,8 +177,8 @@
                     </div>
                     <!-- HAVA DURUMU HAPI -->
                     <div class="flex-1 bg-emerald-50 dark:bg-emerald-900/40 rounded-[20px] py-4 px-2 flex flex-col items-center justify-center overflow-hidden">
-                        <span class="text-[10px] font-black text-emerald-500 uppercase tracking-widest w-full text-center truncate" id="dash-weather-city">Hava Durumu</span>
-                        <span id="dash-weather" class="text-sm sm:text-base font-black text-emerald-700 dark:text-emerald-300 mt-1.5 w-full text-center truncate">Bekleniyor ⛅</span>
+                        <span class="text-[10px] font-black text-emerald-500 uppercase tracking-widest w-full text-center truncate" id="dash-weather-city">Mersin</span>
+                        <span id="dash-weather" class="text-sm sm:text-base font-black text-emerald-700 dark:text-emerald-300 mt-1.5 w-full text-center truncate">⛅</span>
                     </div>
                 </div>
 
@@ -201,7 +199,7 @@
                 </button>
             </div>
 
-            <!-- Menü Izgarası -->
+            <!-- Menü Izgarası (EĞİTİM EKLENDİ) -->
             <div class="grid grid-cols-2 gap-4 w-full flex-1">
                 <button onclick="showSection('takvim-aylar')" class="w-full h-full min-h-[110px] p-4 glass-card active:scale-[0.98] transition-transform flex flex-col items-center justify-center overflow-hidden">
                     <span class="text-3xl mb-3">📅</span>
@@ -215,9 +213,10 @@
                     <span class="text-3xl mb-3">💰</span>
                     <span class="font-black text-sm text-slate-700 dark:text-slate-200 truncate w-full text-center">Kazanç & Mesai</span>
                 </button>
-                <button onclick="generateYearlyReport()" class="w-full h-full min-h-[110px] p-4 glass-card active:scale-[0.98] transition-transform flex flex-col items-center justify-center overflow-hidden">
-                    <span class="text-3xl mb-3">📊</span>
-                    <span class="font-black text-sm text-slate-700 dark:text-slate-200 truncate w-full text-center">Yıllık Analiz</span>
+                <!-- YENİLİK: Eğitim ve Bilgilendirme -->
+                <button onclick="showSection('egitim')" class="w-full h-full min-h-[110px] p-4 glass-card active:scale-[0.98] transition-transform flex flex-col items-center justify-center overflow-hidden">
+                    <span class="text-3xl mb-3">📚</span>
+                    <span class="font-black text-sm text-slate-700 dark:text-slate-200 truncate w-full text-center">Eğitim & Bilgi</span>
                 </button>
             </div>
         </div>
@@ -232,73 +231,126 @@
                 </h3>
                 <button onclick="closeNotificationModal()" class="w-10 h-10 rounded-full bg-slate-100 dark:bg-darkinput text-slate-500 font-black flex items-center justify-center flex-shrink-0">✕</button>
             </div>
-            
             <div class="flex-1 overflow-y-auto pr-1 space-y-3" id="notification-list"></div>
-            
             <button onclick="clearAllNotifications()" class="w-full py-4 mt-5 bg-slate-800 dark:bg-slate-700 hover:bg-slate-700 text-white rounded-[16px] font-black text-sm active:scale-95 transition-transform truncate shrink-0">
                 Tümünü Temizle (Okundu)
             </button>
         </div>
     </div>
 
-    <!-- SAYFA 2: AYARLAR -->
+    <!-- SAYFA 2: AYARLAR (İLK KURULUM & MESAİ SAATLERİ EKLENDİ) -->
     <div id="section-ayarlar" class="app-page">
         <div class="max-w-[500px] mx-auto w-full min-h-[100dvh] flex flex-col px-5 pt-8 pb-10 gap-4">
-            <header class="mb-4 flex items-center justify-between w-full shrink-0">
+            <header class="mb-2 flex items-center justify-between w-full shrink-0">
                 <button onclick="showSection('menu')" class="flex items-center justify-center w-11 h-11 rounded-[16px] bg-white dark:bg-darkcard shadow-sm hover:scale-105 active:scale-95 transition-all text-slate-600 dark:text-slate-300"><span class="text-2xl leading-none -ml-1">‹</span></button>
-                <h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white flex-1 text-center truncate px-2">Ayarlar</h2>
+                <h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white flex-1 text-center truncate px-2">Sistem Ayarları</h2>
                 <div class="w-11 h-11"></div> 
             </header>
-            <div class="glass-card p-6 sm:p-8 flex flex-col gap-5 w-full">
-                <div class="input-box w-full relative">
+            <div class="glass-card p-6 sm:p-7 flex flex-col gap-4 w-full overflow-y-auto">
+                <div class="bg-indigo-50 dark:bg-indigo-900/20 p-4 rounded-[16px] border border-indigo-100 dark:border-indigo-800">
+                    <p class="text-xs font-bold text-indigo-600 dark:text-indigo-400 text-center">Uygulamanın kişiselleştirilmiş özelliklerini kullanmak için ayarlarınızı kaydedin.</p>
+                </div>
+                
+                <div class="input-box w-full relative !py-3">
                     <label class="block text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-widest mb-2 truncate">Çalışma Döngüsü</label>
                     <select id="ayarlar-dongu" class="w-full text-sm sm:text-base font-bold text-slate-800 dark:text-white appearance-none cursor-pointer truncate pr-4">
                         <option value="default">2 Gündüz, 2 Gece, 2 İzin</option>
                         <option value="4g2i">4 Gündüz, 2 İzin</option>
+                        <option value="5g2i">5 Gündüz, 2 İzin (Hafta Sonu Tatil)</option>
                         <option value="sabit_g">Sabit Gündüz (Pazar İzin)</option>
                         <option value="sabit_ge">Sabit Gece (Pazar İzin)</option>
                     </select>
-                    <span class="absolute right-4 top-1/2 mt-1 text-xs text-slate-400 pointer-events-none">▼</span>
+                    <span class="absolute right-4 top-[60%] mt-1 text-xs text-slate-400 pointer-events-none">▼</span>
                 </div>
-                <div class="input-box w-full relative">
+                <div class="input-box w-full relative !py-3">
                     <label class="block text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-widest mb-2 truncate">Döngü Başlangıç Tarihi</label>
                     <input type="date" id="ayarlar-tarih" class="w-full text-sm sm:text-base font-bold text-slate-800 dark:text-white truncate relative z-10">
-                    <p class="text-[10px] font-bold text-blue-500 mt-2 truncate w-full">* Seçtiğiniz gün ilk "Gündüz" kabul edilir.</p>
+                    <p class="text-[9px] font-bold text-blue-500 mt-2 truncate w-full">* Seçilen gün ilk "Gündüz" kabul edilir.</p>
                 </div>
-                <div class="input-box w-full">
+
+                <!-- YENİ: MESAİ SAATLERİ ÖZELLEŞTİRME -->
+                <div class="p-4 bg-slate-50 dark:bg-darkinput rounded-[20px] border border-slate-100 dark:border-slate-700 space-y-3">
+                    <h3 class="text-[10px] font-black text-slate-400 uppercase tracking-widest w-full text-center">Vardiya Saatlerinizi Belirleyin</h3>
+                    <div class="flex gap-2 w-full">
+                        <div class="w-1/2">
+                            <label class="block text-[9px] font-bold text-blue-500 mb-1 text-center">Gündüz Başlama</label>
+                            <div class="input-box !py-2 !px-3 relative bg-white dark:bg-[#1e293b]"><input type="time" id="ayarlar-g-bas" class="text-sm font-bold text-center text-slate-800 dark:text-white relative z-10"></div>
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-[9px] font-bold text-blue-500 mb-1 text-center">Gündüz Bitiş</label>
+                            <div class="input-box !py-2 !px-3 relative bg-white dark:bg-[#1e293b]"><input type="time" id="ayarlar-g-bit" class="text-sm font-bold text-center text-slate-800 dark:text-white relative z-10"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-2 w-full">
+                        <div class="w-1/2">
+                            <label class="block text-[9px] font-bold text-indigo-500 mb-1 text-center">Gece Başlama</label>
+                            <div class="input-box !py-2 !px-3 relative bg-white dark:bg-[#1e293b]"><input type="time" id="ayarlar-ge-bas" class="text-sm font-bold text-center text-slate-800 dark:text-white relative z-10"></div>
+                        </div>
+                        <div class="w-1/2">
+                            <label class="block text-[9px] font-bold text-indigo-500 mb-1 text-center">Gece Bitiş</label>
+                            <div class="input-box !py-2 !px-3 relative bg-white dark:bg-[#1e293b]"><input type="time" id="ayarlar-ge-bit" class="text-sm font-bold text-center text-slate-800 dark:text-white relative z-10"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-box w-full !py-3">
                     <label class="block text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-widest mb-2 truncate">Maaş Günü (Ayın Kaçı?)</label>
                     <input type="number" id="ayarlar-maas-gunu" placeholder="Örn: 15" min="1" max="31" class="w-full text-sm sm:text-base font-bold text-slate-800 dark:text-white truncate">
                 </div>
-                <button onclick="ayarlariKaydet()" class="w-full py-4 mt-4 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white rounded-[20px] font-black text-sm sm:text-base transition-all shadow-lg shadow-blue-500/30 truncate shrink-0">Ayarları Kaydet ve Uygula</button>
+                <button onclick="ayarlariKaydet()" class="w-full py-4 mt-2 bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white rounded-[20px] font-black text-sm sm:text-base transition-all shadow-lg shadow-blue-500/30 truncate shrink-0">Ayarları Kaydet ve Uygula</button>
             </div>
         </div>
     </div>
 
-    <!-- SAYFA 3: YILLIK RAPOR -->
-    <div id="section-yillik-rapor" class="app-page">
+    <!-- SAYFA 3: EĞİTİM VE BİLGİLENDİRME (YENİ MODÜL) -->
+    <div id="section-egitim" class="app-page">
         <div class="max-w-[500px] mx-auto w-full min-h-[100dvh] flex flex-col px-5 pt-8 pb-10 gap-4">
             <header class="mb-4 flex items-center justify-between w-full shrink-0">
                 <button onclick="showSection('menu')" class="flex items-center justify-center w-11 h-11 rounded-[16px] bg-white dark:bg-darkcard shadow-sm hover:scale-105 active:scale-95 transition-all text-slate-600 dark:text-slate-300"><span class="text-2xl leading-none -ml-1">‹</span></button>
-                <h2 id="report-title" class="text-lg sm:text-xl font-black text-slate-800 dark:text-white flex-1 text-center truncate px-2">Yıllık Analiz</h2>
+                <h2 class="text-lg sm:text-xl font-black text-slate-800 dark:text-white flex-1 text-center truncate px-2">Eğitim ve Bilgilendirme</h2>
                 <div class="w-11 h-11"></div>
             </header>
-            <div class="glass-card p-6 sm:p-8 flex flex-col gap-4 w-full">
-                <div class="text-center mb-2 w-full"><span class="text-[50px] block mb-2">📊</span></div>
-                <div class="grid grid-cols-2 gap-4 w-full">
-                    <div class="input-box !bg-emerald-50 dark:!bg-emerald-900/20 text-center w-full">
-                        <span class="block text-[11px] font-black text-emerald-500 uppercase tracking-widest mb-1 truncate">Gündüz</span>
-                        <span id="yil-gunduz" class="text-3xl font-black text-emerald-600 dark:text-emerald-400 truncate">0</span>
-                    </div>
-                    <div class="input-box !bg-indigo-50 dark:!bg-indigo-900/20 text-center w-full">
-                        <span class="block text-[11px] font-black text-indigo-500 uppercase tracking-widest mb-1 truncate">Gece</span>
-                        <span id="yil-gece" class="text-3xl font-black text-indigo-600 dark:text-indigo-400 truncate">0</span>
-                    </div>
-                </div>
-                <div class="input-box text-center w-full mt-2">
-                    <span class="block text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Toplam İzin</span>
-                    <span id="yil-izin" class="text-3xl font-black text-slate-700 dark:text-slate-300 truncate">0</span>
-                </div>
+            
+            <div class="bg-indigo-50 dark:bg-indigo-900/20 p-5 rounded-[24px] border border-indigo-100 dark:border-indigo-800/50 mb-2">
+                <h3 class="text-sm font-black text-indigo-600 dark:text-indigo-400 mb-1 flex items-center gap-2"><span class="text-xl">🛡️</span> Güvenlik El Kitabı</h3>
+                <p class="text-xs font-bold text-slate-600 dark:text-slate-300">Görev noktalarınız ve operasyonel bilgileriniz için hızlı başvuru kaynağınız.</p>
             </div>
+
+            <div class="grid grid-cols-1 gap-3 w-full flex-1">
+                <button onclick="openInfoModal('Genel Bilgiler')" class="glass-card p-4 flex items-center justify-between active:scale-95 transition-transform text-left">
+                    <div class="flex items-center gap-3"><span class="text-2xl">📋</span><span class="font-black text-sm text-slate-700 dark:text-slate-200">Genel Bilgiler</span></div><span class="text-slate-400">›</span>
+                </button>
+                <button onclick="openInfoModal('Üstler ve Amirler')" class="glass-card p-4 flex items-center justify-between active:scale-95 transition-transform text-left">
+                    <div class="flex items-center gap-3"><span class="text-2xl">👮‍♂️</span><span class="font-black text-sm text-slate-700 dark:text-slate-200">Üstler ve Amirler</span></div><span class="text-slate-400">›</span>
+                </button>
+                <button onclick="openInfoModal('Telsiz Kodları')" class="glass-card p-4 flex items-center justify-between active:scale-95 transition-transform text-left">
+                    <div class="flex items-center gap-3"><span class="text-2xl">📟</span><span class="font-black text-sm text-slate-700 dark:text-slate-200">Telsiz Kodları</span></div><span class="text-slate-400">›</span>
+                </button>
+                <button onclick="openInfoModal('Telsiz Anonsları')" class="glass-card p-4 flex items-center justify-between active:scale-95 transition-transform text-left">
+                    <div class="flex items-center gap-3"><span class="text-2xl">🎙️</span><span class="font-black text-sm text-slate-700 dark:text-slate-200">Telsiz Anonsları</span></div><span class="text-slate-400">›</span>
+                </button>
+                <button onclick="openInfoModal('Nöbet Noktaları')" class="glass-card p-4 flex items-center justify-between active:scale-95 transition-transform text-left">
+                    <div class="flex items-center gap-3"><span class="text-2xl">📍</span><span class="font-black text-sm text-slate-700 dark:text-slate-200">Nöbet Noktaları</span></div><span class="text-slate-400">›</span>
+                </button>
+                <button onclick="openInfoModal('Gemi Faaliyetleri')" class="glass-card p-4 flex items-center justify-between active:scale-95 transition-transform text-left">
+                    <div class="flex items-center gap-3"><span class="text-2xl">🚢</span><span class="font-black text-sm text-slate-700 dark:text-slate-200">Gemi Faaliyetleri</span></div><span class="text-slate-400">›</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EĞİTİM/BİLGİ MODALI (İçi Boş Taslak) -->
+    <div id="info-modal" class="fixed inset-0 z-[80] flex items-center justify-center p-5 modal-overlay hidden">
+        <div class="bg-white dark:bg-darkcard p-6 sm:p-8 rounded-[32px] shadow-2xl w-full max-w-sm flex flex-col">
+            <div class="flex justify-between items-center mb-4 w-full gap-2 shrink-0 border-b border-slate-100 dark:border-slate-700 pb-4">
+                <h3 id="info-modal-title" class="text-lg font-black text-slate-800 dark:text-white flex-1 truncate px-1">Başlık</h3>
+                <button onclick="closeInfoModal()" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-darkinput text-slate-500 font-black flex items-center justify-center flex-shrink-0">✕</button>
+            </div>
+            <div class="flex flex-col items-center justify-center py-10 text-center gap-3">
+                <span class="text-5xl">⏳</span>
+                <p class="text-sm font-bold text-slate-500 dark:text-slate-400">Bu modülün içerik verileri yakında güncellenecektir.</p>
+            </div>
+            <button onclick="closeInfoModal()" class="w-full py-3 mt-2 bg-slate-100 dark:bg-darkinput text-slate-700 dark:text-slate-200 rounded-[16px] font-black text-sm active:scale-95 transition-transform">Anladım, Kapat</button>
         </div>
     </div>
 
@@ -391,7 +443,7 @@
                 <div class="w-11 h-11"></div>
             </header>
             
-            <div class="glass-card p-5 sm:p-6 flex flex-col gap-4 w-full">
+            <div class="glass-card p-5 sm:p-6 flex flex-col gap-4 w-full overflow-y-auto">
                 <!-- Temel Maaş -->
                 <div class="input-box w-full !py-3">
                     <label class="block text-[10px] sm:text-xs font-black text-slate-500 uppercase tracking-widest mb-1 truncate">Aylık Net Maaş (Ops.)</label>
@@ -447,7 +499,7 @@
                 </div>
                 
                 <button onclick="hesaplaMesai()" class="w-full py-4 mt-1 bg-slate-800 dark:bg-emerald-600 active:scale-[0.98] text-white rounded-[20px] font-black text-sm sm:text-base transition-transform shadow-md truncate shrink-0">Tümünü Hesapla</button>
-                <div id="mesai-sonuc" class="hidden mt-1 w-full"></div>
+                <div id="mesai-sonuc" class="hidden mt-1 w-full shrink-0"></div>
                 
                 <button onclick="showSection('butce')" class="w-full py-4 mt-1 bg-indigo-600 active:scale-[0.98] text-white rounded-[20px] font-black text-sm sm:text-base transition-transform shadow-md shadow-indigo-500/30 truncate shrink-0 flex items-center justify-center gap-2">
                     <span class="text-xl">💼</span> Akıllı Bütçe Planlayıcı
@@ -583,7 +635,14 @@
         let shiftSetting = localStorage.getItem('v_shift_setting') || 'default';
         let shiftRefDate = localStorage.getItem('v_shift_ref') || `2026-05-24`; 
         let paydaySetting = parseInt(localStorage.getItem('v_payday')) || 15;
+        let isConfigured = localStorage.getItem('v_is_configured'); // İLK KURULUM KONTROLÜ
         let activeNoteDateKey = "";
+
+        // ÖZEL MESAİ SAATLERİ
+        let gBas = localStorage.getItem('v_g_bas') || "08:00";
+        let gBit = localStorage.getItem('v_g_bit') || "20:00";
+        let geBas = localStorage.getItem('v_ge_bas') || "20:00";
+        let geBit = localStorage.getItem('v_ge_bit') || "08:00";
 
         let budgetExpenses = JSON.parse(localStorage.getItem('v_budget')) || [];
         let activeNotifications = []; 
@@ -596,9 +655,15 @@
         }
 
         window.onload = () => {
+            // YENİLİK: İLK KURULUM KONTROLÜ
             setTimeout(() => {
                 const splash = document.getElementById('splash-screen');
                 if (splash) { splash.style.opacity = '0'; setTimeout(() => { splash.style.display = 'none'; }, 500); }
+                
+                // Splash bittikten sonra, eğer kişi daha önce ayarları kaydetmediyse ayarlar sayfasını aç
+                if(!isConfigured) {
+                    showSection('ayarlar');
+                }
             }, 2000);
 
             if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -608,6 +673,10 @@
             document.getElementById('ayarlar-dongu').value = shiftSetting;
             document.getElementById('ayarlar-tarih').value = shiftRefDate;
             document.getElementById('ayarlar-maas-gunu').value = paydaySetting;
+            document.getElementById('ayarlar-g-bas').value = gBas;
+            document.getElementById('ayarlar-g-bit').value = gBit;
+            document.getElementById('ayarlar-ge-bas').value = geBas;
+            document.getElementById('ayarlar-ge-bit').value = geBit;
             document.getElementById('start-date').valueAsDate = CURRENT_DATE;
 
             document.getElementById('mesai-maas').value = localStorage.getItem('v_maas') || '';
@@ -626,23 +695,18 @@
 
             initDashboard();
             startLiveClock();
-            fetchWeather(); // YENİLİK: Hava Durumu (Direkt Mersin)
+            fetchWeather(); 
             checkNotifications();
             renderBudget();
         }
 
-        // --- HAVA DURUMU (API) SİSTEMİ - MERSİN'E KİLİTLİ ---
         async function fetchWeather() {
             const weatherEl = document.getElementById('dash-weather');
-            const cityEl = document.getElementById('dash-weather-city');
             const apiKey = '127997d73d31a727c2395dbed41ac8cc';
-            
             try {
-                // Sadece Mersin iline istek atar
                 const res = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=Mersin,TR&appid=${apiKey}&units=metric&lang=tr`);
                 if(!res.ok) throw new Error("City not found");
                 const data = await res.json();
-                
                 if(data && data.main) {
                     const temp = Math.round(data.main.temp);
                     const id = data.weather[0].id;
@@ -653,16 +717,11 @@
                     else if(id >= 700 && id < 800) emoji = '🌫️';
                     else if(id === 800) emoji = '☀️';
                     else if(id > 800) emoji = '☁️';
-                    
                     weatherEl.innerText = `${temp}°C ${emoji}`;
-                    cityEl.innerText = "MERSİN"; 
                 }
-            } catch (e) {
-                weatherEl.innerText = 'Hata ⚠️';
-            }
+            } catch (e) { weatherEl.innerText = 'Hata ⚠️'; }
         }
 
-        // ÇARPAN BUTONLARI VE BOŞ GİRİŞ SİSTEMİ
         function setMult(type, val) {
             if(type === 1) { mult1 = val; localStorage.setItem('v_mult1', val); }
             else { mult2 = val; localStorage.setItem('v_mult2', val); }
@@ -840,6 +899,8 @@
             let cycle = [];
             if(shiftSetting === 'default') cycle = ['Gündüz', 'Gündüz', 'Gece', 'Gece', 'İzin', 'İzin'];
             else if(shiftSetting === '4g2i') cycle = ['Gündüz', 'Gündüz', 'Gündüz', 'Gündüz', 'İzin', 'İzin'];
+            // YENİLİK: 5 Gündüz 2 İzin (Hafta sonu tatil)
+            else if(shiftSetting === '5g2i') return (targetDate.getDay() === 0 || targetDate.getDay() === 6) ? 'İzin' : 'Gündüz';
             else if(shiftSetting === 'sabit_g') return targetDate.getDay() === 0 ? 'İzin' : 'Gündüz';
             else if(shiftSetting === 'sabit_ge') return targetDate.getDay() === 0 ? 'İzin' : 'Gece';
             const len = cycle.length; let idx = diffDays % len; if (idx < 0) idx = len + idx; 
@@ -850,7 +911,16 @@
             const yeniDongu = document.getElementById('ayarlar-dongu').value; const yeniTarih = document.getElementById('ayarlar-tarih').value; const yeniMaas = document.getElementById('ayarlar-maas-gunu').value;
             if (!yeniTarih) { alert("Lütfen başlangıç tarihi seçin."); return; }
             shiftSetting = yeniDongu; shiftRefDate = yeniTarih; paydaySetting = parseInt(yeniMaas) || 15;
+            
+            // YENİLİK: Mesai saatleri değişkenlerini de kaydet
+            gBas = document.getElementById('ayarlar-g-bas').value; gBit = document.getElementById('ayarlar-g-bit').value;
+            geBas = document.getElementById('ayarlar-ge-bas').value; geBit = document.getElementById('ayarlar-ge-bit').value;
+
+            if(!gBas || !gBit || !geBas || !geBit) { alert("Lütfen mesai saatlerini eksiksiz girin."); return; }
+
+            localStorage.setItem('v_is_configured', 'true');
             localStorage.setItem('v_shift_setting', shiftSetting); localStorage.setItem('v_shift_ref', shiftRefDate); localStorage.setItem('v_payday', paydaySetting);
+            localStorage.setItem('v_g_bas', gBas); localStorage.setItem('v_g_bit', gBit); localStorage.setItem('v_ge_bas', geBas); localStorage.setItem('v_ge_bit', geBit);
             
             localStorage.setItem('v_maas', document.getElementById('mesai-maas').value);
             localStorage.setItem('v_saat1', document.getElementById('mesai-saat-1').value); localStorage.setItem('v_ucret1', document.getElementById('mesai-ucret-1').value);
@@ -882,21 +952,42 @@
 
         function startLiveClock() { setInterval(() => { document.getElementById('live-clock').innerText = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute:'2-digit' }); }, 1000); }
 
+        // YENİLİK: DİNAMİK VARDİYA İLERLEME HESAPLAYICI (GİRİLEN SAATLERE GÖRE)
         function updateShiftProgress(shiftToday) {
             const container = document.getElementById('shift-progress-container'); const bar = document.getElementById('shift-progress-bar'); const txt = document.getElementById('shift-progress-text'); const desc = document.getElementById('shift-progress-desc');
             if (shiftToday !== 'Gündüz' && shiftToday !== 'Gece') { container.classList.add('hidden'); return; }
             container.classList.remove('hidden');
+            
+            const timeToMins = (str) => { let p = str.split(':'); return parseInt(p[0])*60 + parseInt(p[1]); };
+            
             const calcProgress = () => {
-                const now = new Date(); const h = now.getHours(); const m = now.getMinutes(); const currentMins = (h * 60) + m; let percent = 0;
-                if (shiftToday === 'Gündüz') {
-                    if (currentMins >= 480 && currentMins <= 1200) { percent = ((currentMins - 480) / 720) * 100; desc.innerText = "Mesaiye devam, kolay gelsin!"; bar.className = "bg-blue-500 h-3 rounded-full progress-bar-striped transition-all duration-1000"; } 
-                    else if (currentMins > 1200) { percent = 100; desc.innerText = "Mesai bitti, dinlenme vakti."; bar.className = "bg-slate-400 h-3 rounded-full transition-all"; }
-                    else { percent = 0; desc.innerText = "Mesai henüz başlamadı."; bar.className = "bg-slate-300 h-3 rounded-full transition-all"; }
+                const now = new Date(); const currentMins = now.getHours() * 60 + now.getMinutes();
+                let startMins = shiftToday === 'Gündüz' ? timeToMins(gBas) : timeToMins(geBas);
+                let endMins = shiftToday === 'Gündüz' ? timeToMins(gBit) : timeToMins(geBit);
+                
+                let duration = endMins > startMins ? endMins - startMins : (endMins + 1440) - startMins;
+                let isOvernight = startMins > endMins;
+                let inShift = false; let elapsed = 0; let status = 'before';
+
+                if (!isOvernight) {
+                    if (currentMins >= startMins && currentMins <= endMins) { inShift = true; elapsed = currentMins - startMins; status = 'during'; } 
+                    else if (currentMins > endMins) { status = 'after'; }
                 } else {
-                    if (currentMins >= 1200) { percent = ((currentMins - 1200) / 720) * 100; desc.innerText = "Gece mesaisi devam ediyor."; bar.className = "bg-indigo-500 h-3 rounded-full progress-bar-striped transition-all duration-1000"; } 
-                    else if (currentMins <= 480) { percent = (((currentMins + 1440) - 1200) / 720) * 100; desc.innerText = "Gece bitiyor, az kaldı!"; bar.className = "bg-indigo-500 h-3 rounded-full progress-bar-striped transition-all duration-1000"; } 
-                    else { percent = 100; desc.innerText = "Mesai dışındasınız."; bar.className = "bg-slate-400 h-3 rounded-full transition-all"; }
+                    if (currentMins >= startMins) { inShift = true; elapsed = currentMins - startMins; status = 'during'; } 
+                    else if (currentMins <= endMins) { inShift = true; elapsed = currentMins + 1440 - startMins; status = 'during'; }
                 }
+
+                let percent = 0;
+                if(status === 'during') {
+                    percent = (elapsed / duration) * 100;
+                    desc.innerText = "Mesaiye devam, kolay gelsin!";
+                    bar.className = shiftToday === 'Gündüz' ? "bg-blue-500 h-3 rounded-full progress-bar-striped transition-all duration-1000" : "bg-indigo-500 h-3 rounded-full progress-bar-striped transition-all duration-1000";
+                } else if (status === 'after') {
+                    percent = 100; desc.innerText = "Mesai bitti, dinlenme vakti."; bar.className = "bg-slate-400 h-3 rounded-full transition-all";
+                } else {
+                    percent = 0; desc.innerText = "Mesai henüz başlamadı."; bar.className = "bg-slate-300 h-3 rounded-full transition-all";
+                }
+
                 percent = Math.max(0, Math.min(100, percent)); bar.style.width = `${percent}%`; txt.innerText = `%${Math.round(percent)}`;
             };
             calcProgress(); setInterval(calcProgress, 60000); 
@@ -945,7 +1036,7 @@
 
                 let dayBills = budgetExpenses.filter(e => {
                     if(!e.day) return false;
-                    let targetDay = e.day > daysInMonth ? daysInMonth : e.day;
+                    let targetDay = e.day > daysInMonth ? daysInMonth : e.day; 
                     return targetDay === d;
                 });
                 
@@ -1000,7 +1091,6 @@
             } else holidayBox.classList.add('hidden');
         }
 
-        // WHATSAPP PAYLAŞIM VE GİZLİ COPY-PASTE HATA DÜZELTMELERİ
         function shareWhatsApp() {
             let textData = `📅 *${activeMonthName} ${CURRENT_YEAR} Vardiya Planı:*\n\n`;
             for (let d = 1; d <= new Date(CURRENT_YEAR, activeMonthIndex + 1, 0).getDate(); d++) {
@@ -1044,14 +1134,6 @@
             if(document.getElementById('section-takvim-detay').classList.contains('active')) showCalendar(activeMonthIndex, activeMonthName);
         }
 
-        function generateYearlyReport() {
-            showSection('yillik-rapor'); document.getElementById('report-title').innerText = `${CURRENT_YEAR} Yıllık Analiz`; let totalGunduz = 0, totalGece = 0, totalIzin = 0;
-            for (let d = new Date(CURRENT_YEAR, 0, 1); d <= new Date(CURRENT_YEAR, 11, 31); d.setDate(d.getDate() + 1)) {
-                const s = getShift(new Date(d)); if(s === 'Gündüz') totalGunduz++; else if(s === 'Gece') totalGece++; else totalIzin++;
-            }
-            document.getElementById('yil-gunduz').innerText = totalGunduz; document.getElementById('yil-gece').innerText = totalGece; document.getElementById('yil-izin').innerText = totalIzin;
-        }
-
         function hesaplaIzin() {
             const startStr = document.getElementById('start-date').value; const gun = parseInt(document.getElementById('izin-gun').value); const toplamHak = parseInt(document.getElementById('izin-toplam-hak').value) || 0; const sonucKutu = document.getElementById('izin-sonuc');
             if(!startStr || isNaN(gun) || gun < 1) { sonucKutu.classList.remove('hidden'); sonucKutu.innerHTML = `<div class="input-box !bg-rose-50 dark:!bg-rose-900/30 text-center w-full"><span class="text-rose-500 font-black w-full text-center truncate">Tarih ve Gün Girin</span></div>`; return; }
@@ -1064,7 +1146,6 @@
             sonucKutu.innerHTML = `<div class="input-box !bg-purple-50 dark:!bg-purple-900/30 text-center w-full flex flex-col items-center p-4"><div class="text-[10px] font-black uppercase tracking-widest text-purple-500 mb-1 w-full text-center truncate">İşe Dönüş Tarihi</div><div class="text-base sm:text-lg font-black text-purple-700 dark:text-purple-300 w-full block text-center truncate">${start.toLocaleDateString('tr-TR', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}</div></div>${bakiyeHTML}`;
         }
 
-        // MESAİ SIFIR KABUL ETME SİSTEMİ EKLENDİ
         function hesaplaMesai() {
             const maas = parseFloat(document.getElementById('mesai-maas').value) || 0;
             
@@ -1096,6 +1177,15 @@
             
             sonucKutu.classList.remove('hidden');
             sonucKutu.innerHTML = `<div class="input-box !bg-emerald-50 dark:!bg-emerald-900/30 text-center w-full flex flex-col items-center p-4"><div class="text-[10px] font-black uppercase tracking-widest text-emerald-500 mb-1 w-full text-center truncate">Toplam Hakediş</div><div class="text-2xl font-black text-emerald-700 dark:text-emerald-300 w-full block text-center truncate">${genelToplam.toLocaleString('tr-TR')} ₺</div></div>`;
+        }
+
+        // YENİLİK: EĞİTİM MODALI KONTROLLERİ
+        function openInfoModal(title) {
+            document.getElementById('info-modal-title').innerText = title;
+            document.getElementById('info-modal').classList.remove('hidden');
+        }
+        function closeInfoModal() {
+            document.getElementById('info-modal').classList.add('hidden');
         }
     </script>
 </body>
